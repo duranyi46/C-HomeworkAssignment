@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 
 enum {SUCCESS,FAIL};
 
@@ -47,6 +48,23 @@ int main()
 	 }
 	fclose(fptr1); fclose(fptr2); /* End of part b */
 	
+	/* Open text.txt file */
+	FILE *fptr3;
+	fptr3 = fopen("text.txt","r");
+	int letter,j; int ascii_values[1050];
+	
+	if ((fptr3 = fopen("text.txt", "r")) == NULL) { /* In case text.txt cannot be opened */
+		printf("Can't open %s\n",fptr3);
+	} else {
+		while((letter = getc(fptr3)) != EOF) {
+			if (isalpha(letter)) {
+				ascii_values[j++] = letter;
+			}
+		}
+		ascii_values[j] = '/0';
+	 	}
+
+	fclose(fptr3);
 	return reval;
 	}
 	
