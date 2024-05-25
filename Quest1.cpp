@@ -4,6 +4,9 @@
 
 enum { SUCCESS, FAIL };
 
+/* func for Quest2 Part b */
+void ReplacementReadWrite(FILE *fin, FILE *fout);
+
 int main() {
     int studentNumber[8] = {9, 0, 2, 3, 0, 7, 6, 7}; /* Creating array, its size and files even.txt and odd.txt */
     int size = sizeof(studentNumber) / sizeof(studentNumber[0]);
@@ -96,7 +99,7 @@ int main() {
     } /* END OF THE QUEST 1 */
 
 	fptr3 = fopen("text.txt", "r");
-    if (fptr3 == NULL) { /* In case text.txt cannot be opened */
+    if ((fptr3 == NULL)) { /* In case text.txt cannot be opened */
         printf("Can't open text.txt\n");
         return FAIL;
     } else {	/* text.txt opened */
@@ -134,7 +137,33 @@ int main() {
 	printf("Number of u : %d\n",uCount);
 	} /* End of Quest2 Part a */
 	
-	
-    return reval;
+	/* Opening text.txt and creating newtext.txt */
+	FILE *fptr4; /* for newtext.txt */
+	char filename4[] = "newtext.txt";
+	char filename3[] = "text.txt";
+	if ((fptr4 = fopen(filename4, "w")) == NULL) { /* error handling for opening and creating newtext.txt */
+		printf("Can't open %s\n",filename4);
+		return FAIL;
+	} else if ((fptr3 = fopen(filename3, "r")) == NULL) { /* error handling for opening text.txt */
+		printf("Can't open %s\n",filename3);
+		return FAIL;
+	} else { /* after files opened, function will operate then files will close */
+		ReplacementReadWrite(fptr3,fptr4); /* func */
+		fclose(fptr4);
+		fclose(fptr3);
 	}
-
+	return reval;
+	}
+	
+	void ReplacementReadWrite(FILE *fin,FILE *fout) { /* QUEST2 PART B FUNCTION */
+		int c; /* variable defining for iteration */
+		while ((c = getc(fin)) != EOF) { /* reading text.txt as fin */
+			if (c == 'a') { /* if variable matches with 'a' it becomes 'e' */
+				c = 'e';
+			} else if (c == 'u') { /* if variable matches with 'a' it becomes 'e' */
+				c = 'o';
+			}
+			fputc(c,fout); /* writes variable in newtext.txt as fout */
+		}
+		
+	}
