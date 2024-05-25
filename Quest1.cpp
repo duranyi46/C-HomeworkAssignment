@@ -59,11 +59,11 @@ int main() {
     } else { /* text.txt opened */
         int letter, count = 0;
         int *ascii_values = NULL;
-        while ((letter = getc(fptr3)) != EOF) {
+        while ((letter = getc(fptr3)) != EOF) { /* reading text */
             if (isalpha(letter)) { /* checking whether it is a letter or not */
-                ascii_values = (int *)realloc(ascii_values, (count + 1) * sizeof(int));
+                ascii_values = (int *)realloc(ascii_values, (count + 1) * sizeof(int)); /* dynamically allocating memory for valid ascii values while reading */
                 if (ascii_values == NULL) {
-                    printf("Memory allocation failed.\n");
+                    printf("Memory can not be allocated.\n");
                     return FAIL;
                 }
                 ascii_values[count++] = letter; /* if it is a letter get its ascii value in array */
@@ -80,8 +80,8 @@ int main() {
             free(ascii_values);
             return FAIL;
         } else { /* Both text files are created and opened. Writing even and odd ascii values corresponding files */
-            fprintf(fptr1, "\n");
-            fprintf(fptr2, "\n");
+            fprintf(fptr1, "\n"); /* for new line */
+            fprintf(fptr2, "\n"); /* for new line */
             for (int i = 0; i < count; i++) {
                 if (ascii_values[i] % 2 == 0) {
                     fprintf(fptr1, "%i ", ascii_values[i]);
@@ -93,8 +93,48 @@ int main() {
             fclose(fptr2);
         }
         free(ascii_values);
-    }
+    } /* END OF THE QUEST 1 */
 
+	fptr3 = fopen("text.txt", "r");
+    if (fptr3 == NULL) { /* In case text.txt cannot be opened */
+        printf("Can't open text.txt\n");
+        return FAIL;
+    } else {	/* text.txt opened */
+		int letter;
+		int aCount = 0; 
+		int eCount = 0; 
+		int oCount = 0; 
+		int iCount = 0; 
+		int uCount = 0; /*  defining vowel counts */
+		while ((letter = getc(fptr3)) != EOF) { /* reading text */
+    		letter = tolower(letter); /* for switch-case all letters must be case sensitive */
+			switch(letter){ /* switch-case four counting vowels */
+				case 'a':
+					++aCount;
+					break;
+				case 'e':
+					++eCount;
+					break;
+				case 'o':
+					++oCount;
+					break;
+				case 'i':
+					++iCount;
+					break;
+				case 'u':
+					++uCount;
+					break;
+			}
+		}
+	fclose(fptr3); /* closing text.txt */
+	printf("Number of a : %d\n",aCount); /* displaying each vowel count */
+	printf("Number of e : %d\n",eCount);
+	printf("Number of o : %d\n",oCount);
+	printf("Number of i : %d\n",iCount);
+	printf("Number of u : %d\n",uCount);
+	} /* End of Quest2 Part a */
+	
+	
     return reval;
-}
+	}
 
